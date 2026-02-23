@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boda - Lorelei & Gustavo</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
     <style>
-        /* Variables de colores */
         :root {
             --blanco: #ffffff;
             --texto-oscuro: #4a4a4a;
@@ -25,10 +26,10 @@
             font-family: 'Lora', serif;
             color: var(--texto-oscuro);
             background-color: var(--blanco);
-            overflow-x: hidden; /* Evita scroll horizontal por los pétalos */
+            overflow-x: hidden;
         }
 
-        /* --- Menú Superior --- */
+        /* ===== HEADER ===== */
         header {
             display: flex;
             justify-content: space-between;
@@ -54,24 +55,21 @@
             font-size: 0.9rem;
         }
 
-        /* --- Sección Principal (Hero) --- */
+        /* ===== HERO ===== */
         .hero {
             position: relative;
             height: 100vh;
-            /* Imagen de rosas blancas de fondo */
-            background: url('https://i.ibb.co/pjgVCxP2/principal.jpg') no-repeat center center/cover;
+            background: url('https://i.ibb.co/PvCcgg8D/principal.jpg') no-repeat center center/cover;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
         }
 
-        /* Capa blanca semi-transparente sobre la imagen */
         .hero::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            inset: 0;
             background-color: rgba(255, 255, 255, 0.4);
             z-index: 1;
         }
@@ -79,6 +77,7 @@
         .hero-content {
             position: relative;
             z-index: 2;
+            padding: 0 20px;
         }
 
         .hero h1 {
@@ -96,14 +95,14 @@
             color: var(--blanco);
             text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
             max-width: 800px;
-            margin: 0 auto;
+            margin: auto;
             line-height: 1.4;
         }
 
-        /* --- Contenedor Principal (Texto debajo de la imagen) --- */
+        /* ===== CONTENIDO ===== */
         .contenido {
             max-width: 900px;
-            margin: 0 auto;
+            margin: auto;
             padding: 80px 20px;
         }
 
@@ -114,7 +113,6 @@
         h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
-            color: var(--texto-oscuro);
             margin-bottom: 20px;
             font-weight: 400;
         }
@@ -125,7 +123,7 @@
             line-height: 1.8;
         }
 
-        /* --- Itinerario --- */
+        /* ===== ITINERARIO ===== */
         .itinerario-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -135,18 +133,18 @@
 
         .evento strong {
             display: block;
-            color: var(--texto-oscuro);
             font-size: 1.2rem;
             margin-bottom: 5px;
-            font-weight: 600;
+            color: var(--texto-oscuro);
         }
 
-        /* --- Ubicación y Botones Circulares --- */
+        /* ===== UBICACIÓN ===== */
         .ubicacion-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 30px;
         }
 
         .ubicacion-texto {
@@ -157,24 +155,22 @@
         .botones-circulares {
             display: flex;
             gap: 20px;
-            margin-top: 20px;
         }
 
         .btn-circulo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             width: 110px;
             height: 110px;
             border-radius: 50%;
             border: 2px solid var(--dorado-suave);
-            text-decoration: none;
-            color: var(--texto-claro);
-            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 10px;
-            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            color: var(--texto-claro);
             background-color: var(--blanco);
+            transition: all 0.3s ease;
         }
 
         .btn-circulo:hover {
@@ -183,156 +179,169 @@
             transform: scale(1.05);
         }
 
-        /* --- EFECTO PÉTALOS CAYENDO --- */
+        /* ===== PÉTALOS ===== */
         #petalos-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Para que no interfieran con los clics */
+            inset: 0;
+            pointer-events: none;
             z-index: 9999;
-            overflow: hidden;
         }
 
         .petalo {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.85);
-            /* Forma del pétalo usando border-radius */
+            background-color: rgba(255,255,255,0.85);
             border-radius: 15px 0 15px 0;
-            box-shadow: 0 0 5px rgba(0,0,0,0.05);
             top: -10%;
             animation: caer linear infinite;
         }
 
         @keyframes caer {
-            0% {
-                top: -10%;
-                transform: translateX(0) rotate(0deg);
-                opacity: 0;
+            0% { top: -10%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 110%; transform: translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+
+            header {
+                position: relative;
+                justify-content: center;
+                padding: 15px;
             }
-            10% {
-                opacity: 1;
+
+            nav { display: none; }
+
+            .hero h1 {
+                font-size: 3.2rem;
+                line-height: 1.1;
             }
-            90% {
-                opacity: 1;
+
+            .hero p {
+                font-size: 1.2rem;
             }
-            100% {
-                top: 110%;
-                transform: translateX(100px) rotate(360deg);
-                opacity: 0;
+
+            h2 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            p {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .itinerario-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .ubicacion-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .botones-circulares {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .btn-circulo {
+                width: 95px;
+                height: 95px;
+                font-size: 0.8rem;
             }
         }
 
-        /* Responsividad */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 4rem; }
-            .hero p { font-size: 1.3rem; padding: 0 15px; }
-            .itinerario-grid { grid-template-columns: 1fr; gap: 30px; }
-            .ubicacion-container { flex-direction: column; text-align: center; }
-            .botones-circulares { justify-content: center; }
-            header { justify-content: center; }
-            nav { display: none; } /* Ocultar menú en móvil para mantener limpio */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.6rem; }
+            .hero p { font-size: 1.05rem; }
+            .btn-circulo { width: 85px; height: 85px; }
         }
     </style>
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">L & G</div>
-        <nav>
-            <a href="#">Nuestra Boda</a>
-            <a href="#">Detalles</a>
-        </nav>
-    </header>
+<header>
+    <div class="logo">L & G</div>
+    <nav>
+        <a href="#">Nuestra Boda</a>
+        <a href="#">Detalles</a>
+    </nav>
+</header>
 
-    <div id="petalos-container"></div>
+<div id="petalos-container"></div>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Lorelei & Gustavo</h1>
-            <p>2 corazones un mismo destino,<br>hoy comienza nuestro para siempre.</p>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Lorelei & Gustavo</h1>
+        <p>2 corazones un mismo destino,<br>hoy comienza nuestro para siempre.</p>
+    </div>
+</section>
+
+<div class="contenido">
+
+    <section class="seccion">
+        <h2>¡Nos Casamos!</h2>
+        <p>
+            Acompáñanos en este día tan especial. Con la bendición de Dios y de nuestros padres,
+            unimos nuestras vidas. Tu presencia hará este momento aún más inolvidable.
+        </p>
+    </section>
+
+    <section class="seccion">
+        <h2>Itinerario</h2>
+        <div class="itinerario-grid">
+            <div class="evento">
+                <strong>Ceremonia</strong>
+                <p>18:00 – 19:30<br>Iglesia Principal</p>
+            </div>
+            <div class="evento">
+                <strong>Recepción</strong>
+                <p>20:00 – 21:00<br>Llegada de invitados</p>
+            </div>
+            <div class="evento">
+                <strong>Banquete</strong>
+                <p>21:30<br>Festejo y Baile</p>
+            </div>
         </div>
     </section>
 
-    <div class="contenido">
+    <section class="seccion ubicacion-container">
+        <div class="ubicacion-texto">
+            <h2>Location</h2>
+            <p>Salón de Eventos "El Ensueño"<br>Calle Principal #123</p>
+        </div>
 
-        <section class="seccion">
-            <h2>¡Nos Casamos!</h2>
-            <p>
-                Acompáñanos en este día tan especial. Con la bendición de Dios y de nuestros padres, 
-                unimos nuestras vidas. Hemos esperado con mucha ilusión este momento y tu presencia 
-                hará que sea aún más inolvidable.
-            </p>
-        </section>
+        <div class="botones-circulares">
+            <a href="https://maps.google.com" class="btn-circulo">Ver<br>Ubicación</a>
+            <a href="https://wa.me/123456789" class="btn-circulo">Confirmar<br>Asistencia</a>
+        </div>
+    </section>
 
-        <section class="seccion">
-            <h2>Itinerario</h2>
-            <div class="itinerario-grid">
-                <div class="evento">
-                    <strong>Ceremonia</strong>
-                    <p>18:00 pm – 19:30 pm<br>Iglesia Principal</p>
-                </div>
-                <div class="evento">
-                    <strong>Recepción</strong>
-                    <p>20:00 pm – 21:00 pm<br>Llegada de invitados</p>
-                </div>
-                <div class="evento">
-                    <strong>Banquete</strong>
-                    <p>21:30 pm<br>Festejo y Baile</p>
-                </div>
-            </div>
-        </section>
+</div>
 
-        <section class="seccion ubicacion-container">
-            <div class="ubicacion-texto">
-                <h2>Location</h2>
-                <p>Salón de Eventos "El Ensueño"<br>Calle Principal #123<br>Ciudad, CP 00000</p>
-            </div>
-            
-            <div class="botones-circulares">
-                <a href="https://maps.google.com" target="_blank" class="btn-circulo">
-                    Ver<br>Ubicación<br>Maps
-                </a>
-                
-                <a href="https://wa.me/123456789?text=Confirmo%20mi%20asistencia" target="_blank" class="btn-circulo">
-                    Confirmar<br>Asistencia
-                </a>
-            </div>
-        </section>
+<script>
+    const petalContainer = document.getElementById('petalos-container');
+    const numPetals = window.innerWidth < 768 ? 20 : 35;
 
-    </div>
+    for (let i = 0; i < numPetals; i++) {
+        const petalo = document.createElement('div');
+        petalo.classList.add('petalo');
 
-    <script>
-        const petalContainer = document.getElementById('petalos-container');
-        const numPetals = 35; // Cantidad de pétalos en pantalla
+        const size = Math.random() * 15 + 10;
+        petalo.style.width = size + 'px';
+        petalo.style.height = size + 'px';
+        petalo.style.left = Math.random() * 100 + 'vw';
+        petalo.style.animationDuration = (Math.random() * 9 + 6) + 's';
+        petalo.style.animationDelay = Math.random() * 10 + 's';
 
-        for (let i = 0; i < numPetals; i++) {
-            let petalo = document.createElement('div');
-            petalo.classList.add('petalo');
-            
-            // Tamaños aleatorios para los pétalos (entre 10px y 25px)
-            let size = Math.random() * 15 + 10;
-            petalo.style.width = `${size}px`;
-            petalo.style.height = `${size}px`;
-            
-            // Posición horizontal aleatoria
-            petalo.style.left = `${Math.random() * 100}vw`;
-            
-            // Duración de la caída aleatoria (entre 6 y 15 segundos)
-            let duration = Math.random() * 9 + 6;
-            petalo.style.animationDuration = `${duration}s`;
-            
-            // Retraso aleatorio para que no caigan todos al mismo tiempo
-            petalo.style.animationDelay = `${Math.random() * 10}s`;
-            
-            // Ocasionalmente invertir la forma del pétalo para darle variedad
-            if(Math.random() > 0.5) {
-                petalo.style.borderRadius = "0 15px 0 15px";
-            }
+        petalContainer.appendChild(petalo);
+    }
+</script>
 
-            petalContainer.appendChild(petalo);
-        }
-    </script>
 </body>
 </html>
