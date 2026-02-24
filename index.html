@@ -13,7 +13,7 @@
             --texto-oscuro: #4a4a4a;
             --texto-claro: #7a7a7a;
             --dorado-suave: #baa582;
-            --beige-fondo: #faf9f7;
+            --beige-fondo: #fff0d3; /* Puedes cambiar este valor por el color hexadecimal que prefieras */
         }
 
         * {
@@ -97,6 +97,14 @@
             max-width: 800px;
             margin: auto;
             line-height: 1.4;
+        }
+
+        /* ===== FONDO DEL CONTENIDO ===== */
+        .fondo-secciones {
+            background-color: var(--beige-fondo); /* Aquí se aplica el nuevo color de fondo */
+            width: 100%;
+            position: relative;
+            padding-top: 1px; /* Evita que los márgenes colapsen */
         }
 
         /* ===== CONTENIDO ===== */
@@ -282,48 +290,60 @@
     </div>
 </section>
 
-<div class="contenido">
+<div class="fondo-secciones">
+    
+    <div class="contenido">
 
-    <section class="seccion">
-        <h2>¡Nos Casamos!</h2>
-        <p>
-            Acompáñanos en este día tan especial. Con la bendición de Dios y de nuestros padres,
-            unimos nuestras vidas. Tu presencia hará este momento aún más inolvidable.
-        </p>
-    </section>
+        <section class="seccion">
+            <h2>¡Nos Casamos!</h2>
+            <p></p>
+            <p>"Te amaré 100 años más, incluso si el tiempo me arastra lejos de tí, porque mi amor por ti es eterno, más allá de los días puedan contar."</p>
+            <p>
+                
+            </p>
+            <p>
+                Acompáñanos en este día tan especial. Con la bendición de Dios y de nuestros padres,
+                unimos nuestras vidas. Tu presencia hará este momento aún más inolvidable.
+            </p>
+        </section>
 
-    <section class="seccion">
-        <h2>Itinerario</h2>
-        <div class="itinerario-grid">
-            <div class="evento">
-                <strong>Ceremonia</strong>
-                <p>18:00 – 19:30<br>Iglesia Principal</p>
+        <section class="seccion">
+            <h2>Itinerario</h2>
+            <div class="itinerario-grid">
+                <div class="evento">
+                    <strong>Recepción</strong>
+                    <p>18:00 – 18:10</p>
+                </div>
+                <div class="evento">
+                    <strong>Ceremonia</strong>
+                    <p>18:10 – 18:30</p>
+                </div>
+                <div class="evento">
+                    <strong>Banquete</strong>
+                    <p>19:10 – 19:30<br>Comida, brindis.</p>
+                </div>
+                <div class="evento">
+                    <strong>Conclusión</strong>
+                    <p>11:30 – 12:00</p>
+                </div>
             </div>
-            <div class="evento">
-                <strong>Recepción</strong>
-                <p>20:00 – 21:00<br>Llegada de invitados</p>
-            </div>
-            <div class="evento">
-                <strong>Banquete</strong>
-                <p>21:30<br>Festejo y Baile</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="seccion ubicacion-container">
-        <div class="ubicacion-texto">
-            <h2>Location</h2>
-            <p>Salón de Eventos "El Ensueño"<br>Calle Principal #123</p>
-        </div>
+        <section class="seccion ubicacion-container">
+            <div class="ubicacion-texto">
+                <h2>Ubicación</h2>
+                <p>"Jardín Escondido"<br>CCalle Esfuerzo 4, Sta. Úrsula Coapa, Coyoacán, 04650 Ciudad de México, CDMX</p>
+            </div>
 
-        <div class="botones-circulares">
-            <a href="https://maps.app.goo.gl/SM5A7u4iVHE5ZNud6" class="btn-circulo">Ver<br>Ubicación</a>
-            <a href="https://wa.me/525542588709" class="btn-circulo">Confirmar<br>Asistencia</a>
-        </div>
-    </section>
+            <div class="botones-circulares">
+                <a href="https://maps.app.goo.gl/SM5A7u4iVHE5ZNud6" class="btn-circulo">Ver<br>Ubicación</a>
+                <a href="https://wa.me/525542588709" class="btn-circulo">Confirmar<br>Asistencia</a>
+            </div>
+        </section>
+
+    </div>
 
 </div>
-
 <script>
     const petalContainer = document.getElementById('petalos-container');
     const numPetals = window.innerWidth < 768 ? 20 : 35;
@@ -345,5 +365,3 @@
 
 </body>
 </html>
-
-
