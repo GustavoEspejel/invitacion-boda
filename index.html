@@ -107,6 +107,33 @@
             padding-top: 1px; /* Evita que los márgenes colapsen */
         }
 
+        /* Guirnalda pegada al inicio del área beige (.fondo-secciones),
+           ocupa todo el ancho de la página y no altera márgenes de contenido */
+        .fondo-secciones {
+            position: relative; /* asegura que el pseudo esté referenciado a este contenedor */
+        }
+        .fondo-secciones::before {
+            content: "";
+            position: absolute;
+            top: 0;                /* justo en la parte superior de lo beige */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;         /* todo el ancho de la ventana */
+            height: 140px;        /* ajusta según la altura visual que quieras */
+            background-image: url("guirnalda.png");
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: 100% 100%; /* fuerza que cubra de lado a lado */
+            pointer-events: none;
+            z-index: 3;           /* encima del fondo pero debajo del contenido (contenido tiene z-index 2 pero .contenido es relative) */
+        }
+        @media (max-width: 768px) {
+            .fondo-secciones::before {
+                height: 100px;
+                background-size: 100% 100%;
+            }
+        }
+
         /* ===== CONTENIDO ===== */
         .contenido {
             max-width: 900px;
@@ -296,22 +323,6 @@
             position: relative;
             z-index: 2;
         }
-        /* guirnalda PNG sobrepuesta encima de los anillos */
-        .imagen-invitacion img.guirnalda-overlay {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            /* subir 30% adicional respecto a la posición previa de -70%:
-               ahora se traslada -100% de su propia altura (más arriba) */
-            transform: translate(-50%, -100%);
-             width: 780px;           /* 300% del tamaño previo (260px * 3) */
-             max-width: 90%;         /* evita desbordar en pantallas pequeñas */
-             height: auto;
-             pointer-events: none;
-             z-index: 3;
-             mix-blend-mode: normal;
-        }
-
         /* Marco de guirnaldas: ya no es fondo; mantiene padding para separación */
         .guirnalda-marco {
             background: none;
@@ -325,52 +336,13 @@
             z-index: 1;
         }
 
-        /* Guirnaldas laterales (decorativas) - solo en los lados, no afectan márgenes */
-        .guirnalda-lateral {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 120px;                    /* ancho decorativo */
-            pointer-events: none;
-            z-index: 1;                       /* debajo de .guirnalda-contenido (z-index:2) */
-            background-repeat: repeat-y;
-            background-position: center top;
-            background-size: 60px 120px;     /* ancho x alto de cada "pieza" del patrón */
+        /* Desactivar guirnalda interior para evitar duplicados.
+           La guirnalda visible debe venir de .fondo-secciones::before (ancho completo). */
+        .guirnalda-marco::before {
+            display: none !important;
         }
-
-        /* colocar las guirnaldas justo fuera del contenedor centrado (900px) */
-        .guirnalda-lateral.left {
-            left: calc(50% - 450px - 120px - 12px); /* 50% - mitad_contenedor - ancho_guilnada - separación */
-        }
-        .guirnalda-lateral.right {
-            left: calc(50% + 450px + 12px); /* 50% + mitad_contenedor + separación */
-        }
-
-        /* motivo vertical: blanco + rosa pastel (repetible) */
-        .guirnalda-lateral.left,
-        .guirnalda-lateral.right {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='120' viewBox='0 0 60 120'><g fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'><path d='M30 8 C26 28 34 48 30 68 C26 88 34 108 30 128'/></g><g fill='%23ffffff'><ellipse cx='18' cy='30' rx='6' ry='10' transform='rotate(-22 18 30)'/><ellipse cx='42' cy='50' rx='6' ry='10' transform='rotate(18 42 50)'/><ellipse cx='16' cy='74' rx='6' ry='10' transform='rotate(-12 16 74)'/><ellipse cx='44' cy='94' rx='6' ry='10' transform='rotate(12 44 94)'/></g><g fill='%23f2c7d1'><circle cx='30' cy='20' r='5'/><circle cx='30' cy='56' r='5'/><circle cx='30' cy='96' r='5'/></g></svg>");
-        }
-
-        /* ocultar en pantallas pequeñas para evitar superposición */
-        @media (max-width: 1100px) {
-            /* Mostrar guirnaldas en móvil pero más discretas y pegadas al borde */
-            .guirnalda-lateral {
-                display: block;
-                width: 48px;
-                background-size: 28px 80px;
-                top: 80px;     /* evita superponer header/hero */
-                bottom: 40px;
-                z-index: 1;
-            }
-            /* en pantallas pequeñas colocarlas pegadas al borde */
-            .guirnalda-lateral.left {
-                left: 8px !important;
-            }
-            .guirnalda-lateral.right {
-                right: 8px !important;
-                left: auto !important;
-            }
+        @media (max-width: 768px) {
+            .guirnalda-marco::before { display: none !important; }
         }
     </style>
 </head>
@@ -403,7 +375,6 @@
                     <section class="seccion">
                         <div class="imagen-invitacion">
                             <img src="anillos.png" alt="Invitación - Lorelei & Gustavo" class="anillos">
-                            <img src="guirnalda.png" alt="Guirnalda decorativa" class="guirnalda-overlay">
                         </div>
                         <h2>¡Nos Casamos!</h2>
                         <p></p>
@@ -451,9 +422,7 @@
                         </div>
                     </section>
                </div>
-               <!-- guirnaldas laterales decorativas (no afectan márgenes ni flujo) -->
-               <div class="guirnalda-lateral left" aria-hidden="true"></div>
-               <div class="guirnalda-lateral right" aria-hidden="true"></div>
+               <!-- laterales eliminadas; solo queda la guirnalda superior (::before) -->
            </div>
     
         </div>
