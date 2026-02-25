@@ -107,33 +107,6 @@
             padding-top: 1px; /* Evita que los márgenes colapsen */
         }
 
-        /* Guirnalda pegada al inicio del área beige (.fondo-secciones),
-           ocupa todo el ancho de la página y no altera márgenes de contenido */
-        .fondo-secciones {
-            position: relative; /* asegura que el pseudo esté referenciado a este contenedor */
-        }
-        .fondo-secciones::before {
-            content: "";
-            position: absolute;
-            top: 0;                /* justo en la parte superior de lo beige */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100vw;         /* todo el ancho de la ventana */
-            height: 140px;        /* ajusta según la altura visual que quieras */
-            background-image: url("guirnalda.png");
-            background-repeat: no-repeat;
-            background-position: center top;
-            background-size: 100% 100%; /* fuerza que cubra de lado a lado */
-            pointer-events: none;
-            z-index: 3;           /* encima del fondo pero debajo del contenido (contenido tiene z-index 2 pero .contenido es relative) */
-        }
-        @media (max-width: 768px) {
-            .fondo-secciones::before {
-                height: 100px;
-                background-size: 100% 100%;
-            }
-        }
-
         /* ===== CONTENIDO ===== */
         .contenido {
             max-width: 900px;
@@ -206,17 +179,17 @@
             /* invertido: por defecto tiene el estilo "activo" (color al revés) */
             color: var(--blanco);
             background-color: var(--dorado-suave);
-            transition: all 0.3s ease;
-            position: relative; /* asegurar encima de decoraciones */
-            z-index: 5;
+            position: relative;
+            z-index: 6; /* asegurar por encima de decoraciones */
             pointer-events: auto;
-            transform: scale(1.05); /* mostrar estado "presionado" por defecto */
+            transform: scale(1.03);
+            transition: all 0.22s ease;
         }
-
-        /* al pasar el ratón: invertir (volver al aspecto 'normal' y sin escala) */
+ 
+        /* al pasar el ratón: invertir (volver al aspecto 'normal') */
         .btn-circulo:hover {
             background-color: var(--blanco);
-            color: var(--texto-claro);
+            color: var(--texto-oscuro);
             transform: scale(1);
         }
 
@@ -306,43 +279,105 @@
         .imagen-invitacion {
             text-align: center;
             margin-bottom: 20px;
-            position: relative; /* contenedor para overlay */
         }
-        /* imagen de los anillos (debajo) */
-        .imagen-invitacion img.anillos {
-            max-width: 160px;
+        .imagen-invitacion img {
+            max-width: 160px; /* 50% del valor anterior (320px) */
             width: auto;
             height: auto;
-            background: transparent;
-            border: none;
-            box-shadow: none;
+            background: transparent; /* sin fondo opaco */
+            border: none;            /* sin borde */
+            box-shadow: none;        /* sin sombra/marco opaco */
             border-radius: 8px;
             display: inline-block;
             padding: 0;
             object-fit: contain;
-            position: relative;
-            z-index: 2;
         }
-        /* Marco de guirnaldas: ya no es fondo; mantiene padding para separación */
+
+        /* Marco de guirnaldas (desde "Nos Casamos" hasta final) */
         .guirnalda-marco {
-            background: none;
             position: relative;
-            width: 100%;
+            width: 100vw;
+            left: 50%;
+            transform: translateX(-50%);
             box-sizing: border-box;
             padding-top: 70px;
             padding-bottom: 70px;
             overflow: visible;
+        }
+        .guirnalda-marco::before,
+        .guirnalda-marco::after {
+             content: "";
+             position: absolute;
+             left: 0;
+             width: 100%;
+             height: 100px; /* altura mayor para solapar esquinas */
+             background-repeat: repeat-x;
+             background-position: center top;
+             background-size: auto 100px; /* cada ficha tiene 100px de alto */
+             pointer-events: none;
+             z-index: 1;
+         }
+        /* SVG embebido: guirnalda estilo hojas y toques dorados */
+        .guirnalda-marco::before {
+            top: 0;
+            transform: translateY(-50%);
+            /* guirnalda real, repetible horizontal */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='80' viewBox='0 0 240 80'><g fill='none' stroke='%23665a3f' stroke-width='1.5' stroke-linecap='round'><path d='M0 28 C20 10 40 46 60 28 C80 10 100 46 120 28 C140 10 160 46 180 28 C200 10 220 46 240 28'/></g><g fill='%232a7f4a'><ellipse transform='rotate(-20 18 30)' cx='18' cy='30' rx='6' ry='3'/><ellipse transform='rotate(10 48 30)' cx='48' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-10 78 30)' cx='78' cy='30' rx='6' ry='3'/><ellipse transform='rotate(12 108 30)' cx='108' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-8 138 30)' cx='138' cy='30' rx='6' ry='3'/><ellipse transform='rotate(8 168 30)' cx='168' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-12 198 30)' cx='198' cy='30' rx='6' ry='3'/><ellipse transform='rotate(6 228 30)' cx='228' cy='30' rx='6' ry='3'/></g><g fill='%23e8b7b7'><circle cx='36' cy='38' r='4'/><circle cx='96' cy='38' r='4'/><circle cx='156' cy='38' r='4'/><circle cx='216' cy='38' r='4'/></g></svg>");
+        }
+        .guirnalda-marco::after {
+            bottom: 0;
+            transform: translateY(50%) rotate(180deg);
+            /* misma guirnalda invertida para la parte inferior */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='80' viewBox='0 0 240 80'><g fill='none' stroke='%23665a3f' stroke-width='1.5' stroke-linecap='round'><path d='M0 28 C20 10 40 46 60 28 C80 10 100 46 120 28 C140 10 160 46 180 28 C200 10 220 46 240 28'/></g><g fill='%232a7f4a'><ellipse transform='rotate(-20 18 30)' cx='18' cy='30' rx='6' ry='3'/><ellipse transform='rotate(10 48 30)' cx='48' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-10 78 30)' cx='78' cy='30' rx='6' ry='3'/><ellipse transform='rotate(12 108 30)' cx='108' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-8 138 30)' cx='138' cy='30' rx='6' ry='3'/><ellipse transform='rotate(8 168 30)' cx='168' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-12 198 30)' cx='198' cy='30' rx='6' ry='3'/><ellipse transform='rotate(6 228 30)' cx='228' cy='30' rx='6' ry='3'/></g><g fill='%23e8b7b7'><circle cx='36' cy='38' r='4'/><circle cx='96' cy='38' r='4'/><circle cx='156' cy='38' r='4'/><circle cx='216' cy='38' r='4'/></g></svg>");
+        }
+        /* Guirnaldas laterales (izq / der) */
+         .guirnalda-marco .guirnalda-lateral {
+              position: absolute;
+            top: -20px;                /* extender arriba para solapar la guirnalda superior */
+            bottom: -20px;             /* extender abajo para solapar la guirnalda inferior */
+            width: 100px;              /* ancho igual a la altura de la ficha (100px) */
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: 100px 100px; /* ancho x alto de cada ficha: coincide con la superior */
+              pointer-events: none;
+              z-index: 1;
+          }
+         .guirnalda-marco .guirnalda-izq {
+             left: 0;
+             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 240 80'><g transform='rotate(-90 120 40) translate(-120 -40)'><g fill='none' stroke='%23665a3f' stroke-width='1.5' stroke-linecap='round'><path d='M0 28 C20 10 40 46 60 28 C80 10 100 46 120 28 C140 10 160 46 180 28 C200 10 220 46 240 28'/></g><g fill='%232a7f4a'><ellipse transform='rotate(-20 18 30)' cx='18' cy='30' rx='6' ry='3'/><ellipse transform='rotate(10 48 30)' cx='48' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-10 78 30)' cx='78' cy='30' rx='6' ry='3'/><ellipse transform='rotate(12 108 30)' cx='108' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-8 138 30)' cx='138' cy='30' rx='6' ry='3'/><ellipse transform='rotate(8 168 30)' cx='168' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-12 198 30)' cx='198' cy='30' rx='6' ry='3'/><ellipse transform='rotate(6 228 30)' cx='228' cy='30' rx='6' ry='3'/></g><g fill='%23e8b7b7'><circle cx='36' cy='38' r='4'/><circle cx='96' cy='38' r='4'/><circle cx='156' cy='38' r='4'/><circle cx='216' cy='38' r='4'/></g></g></svg>");
+         }
+         .guirnalda-marco .guirnalda-der {
+             right: 0;
+             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 240 80'><g transform='rotate(90 120 40) translate(-120 -40)'><g fill='none' stroke='%23665a3f' stroke-width='1.5' stroke-linecap='round'><path d='M0 28 C20 10 40 46 60 28 C80 10 100 46 120 28 C140 10 160 46 180 28 C200 10 220 46 240 28'/></g><g fill='%232a7f4a'><ellipse transform='rotate(-20 18 30)' cx='18' cy='30' rx='6' ry='3'/><ellipse transform='rotate(10 48 30)' cx='48' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-10 78 30)' cx='78' cy='30' rx='6' ry='3'/><ellipse transform='rotate(12 108 30)' cx='108' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-8 138 30)' cx='138' cy='30' rx='6' ry='3'/><ellipse transform='rotate(8 168 30)' cx='168' cy='30' rx='6' ry='3'/><ellipse transform='rotate(-12 198 30)' cx='198' cy='30' rx='6' ry='3'/><ellipse transform='rotate(6 228 30)' cx='228' cy='30' rx='6' ry='3'/></g><g fill='%23e8b7b7'><circle cx='36' cy='38' r='4'/><circle cx='96' cy='38' r='4'/><circle cx='156' cy='38' r='4'/><circle cx='216' cy='38' r='4'/></g></g></svg>");
+         }
+         /* responsive: reducir laterales en pantallas pequeñas */
+         @media (max-width: 768px) {
+             .guirnalda-marco .guirnalda-lateral { width: 48px; background-size: auto 48px; top: -12px; bottom: -12px; }
+         }
+
+        /* Ocultar decoraciones anteriores (vamos a pintar un SVG único y continuo) */
+        .guirnalda-marco::before,
+        .guirnalda-marco::after,
+        .guirnalda-marco .guirnalda-lateral,
+        .guirnalda-lateral { display: none !important; }
+
+        /* SVG overlay continuo (marco completo) */
+        .guirnalda-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1;
         }
-
-        /* Desactivar guirnalda interior para evitar duplicados.
-           La guirnalda visible debe venir de .fondo-secciones::before (ancho completo). */
-        .guirnalda-marco::before {
-            display: none !important;
-        }
-        @media (max-width: 768px) {
-            .guirnalda-marco::before { display: none !important; }
+        /* Asegurar contenido encima del SVG y preservar márgenes/anchura */
+        .guirnalda-contenido {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;     /* mismo ancho que .contenido */
+            margin: 0 auto;       /* centrar dentro del marco full‑width */
+            padding: 0 20px;      /* respeto de padding lateral */
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -371,10 +406,54 @@
     <div class="contenido">
 
            <div class="guirnalda-marco">
+              <!-- SVG inline que dibuja un marco continuo a las 4 caras -->
+              <svg class="guirnalda-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                      <!-- patrón más denso: pétalos blancos y flores rosa pastel -->
+                      <pattern id="flowerPattern" width="120" height="90" patternUnits="userSpaceOnUse">
+                          <!-- rama / cable -->
+                          <path d="M0 45 C18 30 36 60 54 45 C72 30 90 60 108 45" fill="none" stroke="#b79f8a" stroke-width="1.6"/>
+                          <!-- hojas/pétalos blancos (más abundantes) -->
+                          <g fill="#ffffff">
+                              <ellipse cx="14" cy="36" rx="7" ry="3.8" transform="rotate(-25 14 36)"/>
+                              <ellipse cx="38" cy="36" rx="7" ry="3.8" transform="rotate(8 38 36)"/>
+                              <ellipse cx="62" cy="36" rx="7" ry="3.8" transform="rotate(-8 62 36)"/>
+                              <ellipse cx="86" cy="36" rx="7" ry="3.8" transform="rotate(10 86 36)"/>
+                          </g>
+                          <!-- flores pastel rosadas -->
+                          <g fill="#f3c7d0">
+                              <path d="M30 60 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0" />
+                              <path d="M78 60 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0" />
+                          </g>
+                          <!-- centros más claros -->
+                          <g fill="#ffdfea">
+                              <circle cx="36" cy="54" r="2.2"/>
+                              <circle cx="84" cy="54" r="2"/>
+                          </g>
+                      </pattern>
+                      <!-- patrón rotado para laterales si se usa -->
+                      <pattern id="flowerPatternRot" width="90" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(90)">
+                          <use href="#flowerPattern" x="0" y="0"/>
+                      </pattern>
+                  </defs>
++
+                  <!-- superior: desplazada hacia arriba para solaparse (y arrancar justo donde comienza lo beige) -->
+                  <rect x="0" y="-80" width="1000" height="200" fill="url(#flowerPattern)"/>
+                  <!-- inferior: mantener espejo -->
+                  <rect x="0" y="880" width="1000" height="120" fill="url(#flowerPattern)" transform="translate(1000,200) rotate(180 500 940)"/>
++
+                  <!-- laterales (opcionales, quedan muy discretas) -->
+                  <rect x="0" y="0" width="120" height="1000" fill="url(#flowerPatternRot)" opacity="0.95"/>
+                  <rect x="880" y="0" width="120" height="1000" fill="url(#flowerPatternRot)" opacity="0.95"/>
++
+                  <!-- disimular unión con suaves círculos pastel -->
+                  <circle cx="60" cy="30" r="20" fill="#fff0d3" opacity="0.95"/>
+                  <circle cx="940" cy="30" r="20" fill="#fff0d3" opacity="0.95"/>
+              </svg>
                <div class="guirnalda-contenido">
                     <section class="seccion">
                         <div class="imagen-invitacion">
-                            <img src="anillos.png" alt="Invitación - Lorelei & Gustavo" class="anillos">
+                            <img src="anillos.png" alt="Invitación - Lorelei & Gustavo">
                         </div>
                         <h2>¡Nos Casamos!</h2>
                         <p></p>
@@ -417,12 +496,11 @@
                         </div>
 
                         <div class="botones-circulares">
-                            <a href="https://maps.app.goo.gl/SM5A7u4iVHE5ZNud6" class="btn-circulo" target="_blank" rel="noopener noreferrer" aria-label="Ver ubicación en Google Maps">Ver<br>Ubicación</a>
-                            <a href="https://wa.me/525542588709?text=Hola%20Lorelei%20y%20Gustavo%2C%20confirmo%20mi%20asistencia%20a%20su%20boda" class="btn-circulo" target="_blank" rel="noopener noreferrer" aria-label="Confirmar asistencia por WhatsApp">Confirmar<br>Asistencia</a>
+                            <a href="https://maps.app.goo.gl/SM5A7u4iVHE5ZNud6" class="btn-circulo">Ver<br>Ubicación</a>
+                            <a href="https://wa.me/525542588709" class="btn-circulo">Confirmar<br>Asistencia</a>
                         </div>
                     </section>
                </div>
-               <!-- laterales eliminadas; solo queda la guirnalda superior (::before) -->
            </div>
     
         </div>
@@ -448,18 +526,6 @@
         petalContainer.appendChild(petalo);
     }
 </script>
-<script>
-        // Respaldo: abrir botones en nueva pestaña si el click por alguna razón no navega
-        document.querySelectorAll('.btn-circulo').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const href = btn.getAttribute('href');
-                if (href) {
-                    // abrir en nueva pestaña como fallback
-                    window.open(href, '_blank', 'noopener');
-                }
-            });
-        });
-    </script>
 
 </body>
 </html>
