@@ -99,6 +99,51 @@
             line-height: 1.4;
         }
 
+        /* ===== TÍTULO DEL SOBRE (moved from inside the sobre) ===== */
+        .sobre-titulo{
+            font-family:'Great Vibes',cursive;
+            font-size:3.5rem;
+            color:var(--dorado-suave);
+            text-align:center;
+            width:100%;
+        }
+
+        /* ===== CONTADOR ELEGANTE ===== */
+        .contador{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:14px;
+            flex-wrap:wrap;
+        }
+        .contador .bloque {
+            background: rgba(255,255,255,0.95);
+            border: 1px solid rgba(186,165,130,0.22);
+            padding: 10px 14px;
+            border-radius: 10px;
+            min-width: 72px;
+            text-align: center;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+        }
+        .contador .numero {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--texto-oscuro);
+            font-family: 'Playfair Display', serif;
+        }
+        .contador .label {
+            font-size: 0.75rem;
+            color: var(--texto-claro);
+            margin-top: 4px;
+            display: block;
+            font-family: 'Lora', serif;
+        }
+        @media (max-width:480px){
+            .sobre-titulo { font-size: 2.2rem; }
+            .contador .bloque { min-width:56px; padding:8px 10px; }
+            .contador .numero { font-size: 1.2rem; }
+        }
+
         /* ===== FONDO DEL CONTENIDO ===== */
         .fondo-secciones {
             background-color: var(--beige-fondo); /* Aquí se aplica el nuevo color de fondo */
@@ -379,11 +424,93 @@
             padding: 0 20px;      /* respeto de padding lateral */
             box-sizing: border-box;
         }
+
+        /* ===== SOBRE (overlay inicial) ===== */
+        .sobre-contenedor{
+            position:relative;
+            min-height:100vh;
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:25px;
+            text-align:center;
+            padding:120px 20px 60px;
+
+            transition: opacity 0.8s ease, transform 0.8s ease; /* AGREGAR */
+        }
+
+        .sobre-contenedor.fade-out{
+            opacity:0;
+            transform: translateY(-30px);
+            pointer-events:none;
+        }
+        .sobre-box {
+            width: 420px;
+            max-width: 94%;
+            height: 260px;
+            background: var(--beige-fondo); /* ahora beige */
+            border: 1px solid rgba(186,165,130,0.25);
+            border-radius: 12px;
+            box-shadow: 0 26px 50px rgba(0,0,0,0.18);
+            position: relative;
+            overflow: hidden;
+            transition: transform 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+        }
+        .sobre-tapa {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--dorado-suave), #f3d1dc 70%);
+            clip-path: polygon(0 0, 100% 0, 50% 60%);
+            transform-origin: top;
+            transition: transform 1s ease;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .sobre-mensaje {
+            position: relative;
+            z-index: 2;
+            font-family: 'Great Vibes', cursive; /* misma tipografía que "Lorelei & Gustavo" */
+            font-size: 2.8rem;
+            color: var(--dorado-suave);
+            text-align: center;
+            line-height: 1;
+        }
+        .sobre-click {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            text-align: center;
+            color: var(--texto-claro);
+            font-size: 14px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        /* estado abierto */
+        .sobre-contenedor.abrir .sobre-tapa { transform: rotateX(180deg); }
+        .sobre-contenedor.abrir .sobre-box  { transform: translateY(-22px); }
+ 
+        /* bloqueo de scroll mientras esté el sobre */
+        .locked { overflow: hidden !important; touch-action: none; }
+        /* adaptar en móvil */
+        @media (max-width:480px) {
+            .sobre-box { height: 180px; }
+            .sobre-mensaje { font-size: 1.6rem; }
+        }
+        /* ===== FIN SOBRE ===== */
     </style>
 </head>
 
 <body>
-
+    
 <header>
     <div class="logo">L & G</div>
     <nav>
@@ -391,6 +518,49 @@
         <a href="#">Detalles</a>
     </nav>
 </header>
+
+
+ 
+<div id="sobreContainer" class="sobre-contenedor">
+
+<div class="sobre-titulo">Lorelei & Gustavo</div>
+
+<div class="sobre-box">
+
+<div class="sobre-tapa"></div>
+
+
+
+</div>
+
+<div class="sobre-click">Haz clic para abrir</div>
+
+<div id="contadorBoda" class="contador">
+
+<div class="bloque">
+<div class="numero" id="dias">00</div>
+<div class="label">Días</div>
+</div>
+
+<div class="bloque">
+<div class="numero" id="horas">00</div>
+<div class="label">Horas</div>
+</div>
+
+<div class="bloque">
+<div class="numero" id="minutos">00</div>
+<div class="label">Minutos</div>
+</div>
+
+<div class="bloque">
+<div class="numero" id="segundos">00</div>
+<div class="label">Segundos</div>
+</div>
+
+</div>
+
+</div>
+
 
 <div id="petalos-container"></div>
 
@@ -411,44 +581,36 @@
                   <defs>
                       <!-- patrón más denso: pétalos blancos y flores rosa pastel -->
                       <pattern id="flowerPattern" width="120" height="90" patternUnits="userSpaceOnUse">
-                          <!-- rama / cable -->
                           <path d="M0 45 C18 30 36 60 54 45 C72 30 90 60 108 45" fill="none" stroke="#b79f8a" stroke-width="1.6"/>
-                          <!-- hojas/pétalos blancos (más abundantes) -->
                           <g fill="#ffffff">
                               <ellipse cx="14" cy="36" rx="7" ry="3.8" transform="rotate(-25 14 36)"/>
                               <ellipse cx="38" cy="36" rx="7" ry="3.8" transform="rotate(8 38 36)"/>
                               <ellipse cx="62" cy="36" rx="7" ry="3.8" transform="rotate(-8 62 36)"/>
                               <ellipse cx="86" cy="36" rx="7" ry="3.8" transform="rotate(10 86 36)"/>
                           </g>
-                          <!-- flores pastel rosadas -->
                           <g fill="#f3c7d0">
                               <path d="M30 60 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0" />
                               <path d="M78 60 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0" />
                           </g>
-                          <!-- centros más claros -->
                           <g fill="#ffdfea">
                               <circle cx="36" cy="54" r="2.2"/>
                               <circle cx="84" cy="54" r="2"/>
                           </g>
                       </pattern>
-                      <!-- patrón rotado para laterales si se usa -->
                       <pattern id="flowerPatternRot" width="90" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(90)">
                           <use href="#flowerPattern" x="0" y="0"/>
                       </pattern>
                   </defs>
-+
-                  <!-- superior: desplazada hacia arriba para solaparse (y arrancar justo donde comienza lo beige) -->
-                  <rect x="0" y="-80" width="1000" height="200" fill="url(#flowerPattern)"/>
+
+                  <!-- superior eliminado -->
+
                   <!-- inferior: mantener espejo -->
                   <rect x="0" y="880" width="1000" height="120" fill="url(#flowerPattern)" transform="translate(1000,200) rotate(180 500 940)"/>
-+
-                  <!-- laterales (opcionales, quedan muy discretas) -->
+
+                  <!-- laterales (opcionales) -->
                   <rect x="0" y="0" width="120" height="1000" fill="url(#flowerPatternRot)" opacity="0.95"/>
                   <rect x="880" y="0" width="120" height="1000" fill="url(#flowerPatternRot)" opacity="0.95"/>
-+
-                  <!-- disimular unión con suaves círculos pastel -->
-                  <circle cx="60" cy="30" r="20" fill="#fff0d3" opacity="0.95"/>
-                  <circle cx="940" cy="30" r="20" fill="#fff0d3" opacity="0.95"/>
+
               </svg>
                <div class="guirnalda-contenido">
                     <section class="seccion">
@@ -489,6 +651,7 @@
                         </div>
                     </section>
 
+                    <!-- BORRAR SI HAY DUPLICADO: segunda sección de ubicación -->
                     <section class="seccion ubicacion-container">
                         <div class="ubicacion-texto">
                             <h2>Ubicación</h2>
@@ -509,23 +672,96 @@
 
 </div>
 <script>
-    const petalContainer = document.getElementById('petalos-container');
-    const numPetals = window.innerWidth < 768 ? 20 : 35;
+    // Un único script: pétalos + sobre en flujo (entre header y hero).
+    document.addEventListener('DOMContentLoaded', function () {
+        // pétalos
+        const petalContainer = document.getElementById('petalos-container');
+        const numPetals = window.innerWidth < 768 ? 20 : 35;
+        for (let i = 0; i < numPetals; i++) {
+            const petalo = document.createElement('div');
+            petalo.classList.add('petalo');
+            const size = Math.random() * 15 + 10;
+            petalo.style.width = size + 'px';
+            petalo.style.height = size + 'px';
+            petalo.style.left = Math.random() * 100 + 'vw';
+            petalo.style.animationDuration = (Math.random() * 9 + 6) + 's';
+            petalo.style.animationDelay = Math.random() * 10 + 's';
+            petalContainer.appendChild(petalo);
+        }
 
-    for (let i = 0; i < numPetals; i++) {
-        const petalo = document.createElement('div');
-        petalo.classList.add('petalo');
+        // SOBRE en el flujo: ajustar altura para quedar justo debajo del header
+        const header = document.querySelector('header');
+        const sobre = document.getElementById('sobreContainer');
+        const target = document.querySelector('.hero'); // al hacer click vamos a la hero (imagen principal)
+        const headerHeight = header ? header.offsetHeight : 80;
 
-        const size = Math.random() * 15 + 10;
-        petalo.style.width = size + 'px';
-        petalo.style.height = size + 'px';
-        petalo.style.left = Math.random() * 100 + 'vw';
-        petalo.style.animationDuration = (Math.random() * 9 + 6) + 's';
-        petalo.style.animationDelay = Math.random() * 10 + 's';
+        if (sobre) {
+            // fijar altura exacta para que no se superponga al header
+            sobre.style.position = 'relative';
+            // incrementar ligeramente la altura para que el bloque sea "más amplio"
+            sobre.style.minHeight = `calc(100vh - ${headerHeight}px + 40px)`;
+ 
+            // bloquear scroll hasta que el usuario haga click
+            document.documentElement.classList.add('locked');
+            document.body.classList.add('locked');
+ 
+            sobre.addEventListener('click', function () {
+                sobre.classList.add('abrir');
+                setTimeout(() => {
 
-        petalContainer.appendChild(petalo);
-    }
-</script>
+    sobre.classList.add('fade-out');
+
+                    setTimeout(() => {
+
+                        document.documentElement.classList.remove('locked');
+                        document.body.classList.remove('locked');
+
+                        sobre.style.display = 'none';
+
+                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    }, 800);
+
+                }, 850);
+            });
+        }
+
+        // bloqueo adicional de wheel/touch cuando está locked
+        ['wheel', 'touchmove'].forEach(evt => {
+            window.addEventListener(evt, (e) => {
+                if (document.body.classList.contains('locked')) e.preventDefault();
+            }, { passive: false });
+        });
+
+        // ===== CONTADOR DE LA BODA =====
+        // Ajusta aquí la fecha/hora de la boda:
+        const weddingDate = new Date('2026-05-16T18:00:00'); // formato ISO local
+        function actualizarContador(){
+            const now = new Date();
+            let diff = Math.max(0, weddingDate - now);
+            const dias = Math.floor(diff / (1000*60*60*24));
+            diff -= dias * (1000*60*60*24);
+            const horas = Math.floor(diff / (1000*60*60));
+            diff -= horas * (1000*60*60);
+            const minutos = Math.floor(diff / (1000*60));
+            diff -= minutos * (1000*60);
+            const segundos = Math.floor(diff/1000);
+            const elDias = document.getElementById('dias');
+            const elHoras = document.getElementById('horas');
+            const elMin  = document.getElementById('minutos');
+            const elSeg  = document.getElementById('segundos');
+            if(elDias) elDias.textContent = String(dias).padStart(2,'0');
+            if(elHoras) elHoras.textContent = String(horas).padStart(2,'0');
+            if(elMin) elMin.textContent = String(minutos).padStart(2,'0');
+            if(elSeg) elSeg.textContent = String(segundos).padStart(2,'0');
+        }
+        actualizarContador();
+        const contadorInterval = setInterval(() => {
+            actualizarContador();
+            if (new Date() >= weddingDate) clearInterval(contadorInterval);
+        }, 1000);
+     });
+ </script>
 
 </body>
 </html>
