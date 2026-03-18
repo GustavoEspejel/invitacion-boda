@@ -312,6 +312,21 @@
                 height: 95px;
                 font-size: 0.8rem;
             }
+            /* Evitar recorte lateral de la imagen inicial en móvil */
+            .hero {
+                /* mostrar la imagen completa en móviles */
+                background-size: contain;
+                background-position: center top;
+                background-repeat: no-repeat;
+                /* permitir que la hero no ocupe toda la ventana y mostrar la imagen completa */
+                height: auto;
+                min-height: 60vh;
+                padding-top: 18px;
+            }
+            /* overlay más sutil en móvil para no ocultar la imagen */
+            .hero::before {
+                background-color: rgba(255,255,255,0.15);
+            }
         }
 
         @media (max-width: 480px) {
@@ -661,7 +676,7 @@
                         <div class="botones-circulares">
                             <a href="https://maps.app.goo.gl/SM5A7u4iVHE5ZNud6" class="btn-circulo">Ver<br>Ubicación</a>
                             <a href="https://wa.me/525542588709" class="btn-circulo">Confirmar<br>Asistencia</a>
-                        </div>
+                        </div>              
                     </section>
                </div>
            </div>
