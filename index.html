@@ -269,7 +269,6 @@
                 justify-content: center;
                 padding: 15px;
             }
-
             nav { display: none; }
 
             /* aumentar ligeramente en móvil para mejor presencia */
@@ -313,14 +312,14 @@
                 height: 95px;
                 font-size: 0.8rem;
             }
-            /* Evitar recorte lateral de la imagen inicial en móvil */
+
+            /* Imagen inicial: hacerla un poco más grande en móvil */
             .hero {
-                /* mostrar la imagen completa pero más grande: aumentar min-height */
-                background-size: contain;
+                background-size: 120% auto; /* aumenta escala para verse más grande */
                 background-position: center top;
                 background-repeat: no-repeat;
                 height: auto;
-                min-height: 70vh; /* más alta para que la imagen se vea mayor */
+                min-height: 75vh; /* más alto para mostrar más de la imagen */
                 padding-top: 18px;
             }
             /* overlay más sutil en móvil para no ocultar la imagen */
@@ -342,6 +341,13 @@
             .sobre-titulo { font-size: 2.6rem; }
             .sobre-box { height: 200px; width: 92%; }
             .contador .numero { font-size: 1.4rem; }
+
+            /* versión ultra-pequeña: mantener imagen grande pero evitar recortes excesivos */
+            .hero {
+                background-size: 110% auto;
+                min-height: 72vh;
+                background-position: center top;
+            }
         }
 
         /* Imagen antes de "Nos Casamos" */
