@@ -272,13 +272,14 @@
 
             nav { display: none; }
 
+            /* aumentar ligeramente en móvil para mejor presencia */
             .hero h1 {
-                font-size: 3.2rem;
-                line-height: 1.1;
+                font-size: 3.8rem;
+                line-height: 1.02;
             }
 
             .hero p {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
 
             h2 {
@@ -314,25 +315,33 @@
             }
             /* Evitar recorte lateral de la imagen inicial en móvil */
             .hero {
-                /* mostrar la imagen completa en móviles */
+                /* mostrar la imagen completa pero más grande: aumentar min-height */
                 background-size: contain;
                 background-position: center top;
                 background-repeat: no-repeat;
-                /* permitir que la hero no ocupe toda la ventana y mostrar la imagen completa */
                 height: auto;
-                min-height: 60vh;
+                min-height: 70vh; /* más alta para que la imagen se vea mayor */
                 padding-top: 18px;
             }
             /* overlay más sutil en móvil para no ocultar la imagen */
             .hero::before {
                 background-color: rgba(255,255,255,0.15);
             }
+
+            /* Sobre y título: un poco más grandes en móvil */
+            .sobre-titulo { font-size: 3rem; margin-bottom: 6px; }
+            .sobre-box { height: 240px; width: 460px; }
+            .contador .numero { font-size: 1.8rem; }
         }
 
         @media (max-width: 480px) {
-            .hero h1 { font-size: 2.6rem; }
-            .hero p { font-size: 1.05rem; }
+            /* ajustes para pantallas muy pequeñas */
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.2rem; }
             .btn-circulo { width: 85px; height: 85px; }
+            .sobre-titulo { font-size: 2.6rem; }
+            .sobre-box { height: 200px; width: 92%; }
+            .contador .numero { font-size: 1.4rem; }
         }
 
         /* Imagen antes de "Nos Casamos" */
