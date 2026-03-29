@@ -38,10 +38,8 @@
             padding: 28px 50px;
             min-height: 140px;
             background-color: var(--blanco);
-            position: fixed;
+            position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
             width: 100%;
             z-index: 10;
         }
@@ -96,7 +94,6 @@
         .hero {
             position: relative;
             height: 100vh;
-            padding-top: 24vh;
             background: url('inicial.jpg') no-repeat center center/cover;
             display: flex;
             justify-content: center;
@@ -123,8 +120,8 @@
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 6rem;
-            color: var(--dorado-suave);
-            text-shadow: 1px 1px 10px rgba(0,0,0,0.08);
+            color: var(--blanco);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
             margin-bottom: 20px;
         }
 
@@ -132,8 +129,8 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: 1.8rem;
-            color: var(--dorado-suave);
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.08);
+            color: var(--blanco);
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
             max-width: 800px;
             margin: auto;
             line-height: 1.4;
@@ -305,7 +302,7 @@
         @media (max-width: 768px) {
 
             header {
-                position: fixed;
+                position: relative;
                 justify-content: center;
                 padding: 15px;
             }
@@ -360,11 +357,12 @@
                 background-repeat: no-repeat;
                 height: auto;
                 min-height: 75vh;
-                padding-top: 38vh;
+                padding-top: 18px;
+                filter: brightness(0.95);
             }
-            /* overlay más sutil en móvil para no ocultar la imagen */
+            /* overlay opaco en móvil para suavizar la imagen sin afectar el contenido */
             .hero::before {
-                background-color: rgba(255,255,255,0.15);
+                background-color: rgba(255,255,255,0.48);
             }
 
             /* Sobre y título: un poco más grandes en móvil */
