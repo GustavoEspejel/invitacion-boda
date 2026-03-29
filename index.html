@@ -57,16 +57,11 @@
 
         /* ===== HERO ===== */
         .hero {
-            position: relative;
-            height: 100vh;
-            background-image: url('inicial.png');
+            background-size: contain;   /* respeta proporción completa */
+            background-position: center;
             background-repeat: no-repeat;
-            background-position: top center;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            height: auto;
+            min-height: 75vh;
         }
 
         .hero::before {
@@ -556,7 +551,7 @@
  
 <div id="sobreContainer" class="sobre-contenedor">
 
-<div class="sobre-titulo">PRUEBA</div>
+<div class="sobre-titulo">Lorelei & Gustavo</div>
 
 <div class="sobre-box">
 
