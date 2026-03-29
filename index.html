@@ -96,9 +96,10 @@
             height: 100vh;
             background: url('inicial.jpg') no-repeat center center/cover;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             text-align: center;
+            padding-bottom: 16vh;
             background-size: cover;
             background-position: center bottom;
         }
@@ -120,8 +121,8 @@
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 6rem;
-            color: var(--blanco);
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            color: var(--texto-oscuro);
+            text-shadow: 0 1px 10px rgba(255,255,255,0.75);
             margin-bottom: 20px;
         }
 
@@ -129,8 +130,8 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: 1.8rem;
-            color: var(--blanco);
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+            color: var(--texto-oscuro);
+            text-shadow: 0 1px 8px rgba(255,255,255,0.72);
             max-width: 800px;
             margin: auto;
             line-height: 1.4;
@@ -357,7 +358,8 @@
                 background-repeat: no-repeat;
                 height: auto;
                 min-height: 75vh;
-                padding-top: 18px;
+                justify-content: flex-end;
+                padding-bottom: 16vh;
                 filter: brightness(0.95);
             }
             /* overlay opaco en móvil para suavizar la imagen sin afectar el contenido */
