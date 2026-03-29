@@ -38,8 +38,10 @@
             padding: 28px 50px;
             min-height: 140px;
             background-color: var(--blanco);
-            position: absolute;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
             z-index: 10;
         }
@@ -121,8 +123,8 @@
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 6rem;
-            color: var(--blanco);
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            color: var(--dorado-suave);
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.08);
             margin-bottom: 20px;
         }
 
@@ -130,8 +132,8 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: 1.8rem;
-            color: var(--blanco);
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+            color: var(--dorado-suave);
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.08);
             max-width: 800px;
             margin: auto;
             line-height: 1.4;
@@ -303,7 +305,7 @@
         @media (max-width: 768px) {
 
             header {
-                position: relative;
+                position: fixed;
                 justify-content: center;
                 padding: 15px;
             }
