@@ -792,7 +792,16 @@
 
                         sobre.style.display = 'none';
 
-                        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Asegurar que NO haya movimiento de pantalla
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'auto'
+                        });
+
+                        // Activar fade del hero
+                        if (target) {
+                            target.classList.add('visible');
+                        }
 
                     }, 800);
 
