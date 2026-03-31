@@ -177,7 +177,16 @@
             margin: auto;
             line-height: 1.4;
         }
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
 
+        .galeria-item {
+            overflow: hidden;
+            border-radius: 10px;
+        }
         /* ===== TÍTULO DEL SOBRE (moved from inside the sobre) ===== */
         .sobre-titulo{
             font-family:'Great Vibes',cursive;
@@ -186,6 +195,53 @@
             text-align:center;
             width:100%;
         }
+        .carrusel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    max-width: 100%;
+}
+
+.carrusel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carrusel-track img {
+    width: 100%;
+    flex-shrink: 0;
+    height: 700px;
+    object-fit: cover;
+}
+
+/* Botones */
+.carrusel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    border: none;
+    color: white;
+    font-size: 28px;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.carrusel-btn.prev { left: 10px; }
+.carrusel-btn.next { right: 10px; }
+
+.carrusel-btn:hover {
+    background: rgba(0,0,0,0.7);
+}
+
+/* Móvil */
+@media (max-width: 480px) {
+    .carrusel-track img {
+        height: 500px;
+    }
+}
 
         /* ===== CONTADOR ELEGANTE ===== */
         .contador{
@@ -273,6 +329,41 @@
             font-size: 1.2rem;
             margin-bottom: 5px;
             color: var(--texto-oscuro);
+        }
+
+        @media (max-width: 480px) {
+    .galeria-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .galeria-item img {
+        height: 260px;
+    }
+}
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .galeria-item:hover img {
+            transform: scale(1.04);
+        }
+
+        @media (max-width: 768px) {
+            .galeria-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .galeria-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* ===== UBICACIÓN ===== */
@@ -621,6 +712,48 @@
             .sobre-mensaje { font-size: 1.6rem; }
         }
         /* ===== FIN SOBRE ===== */
+        /* ===== LIGHTBOX GALERÍA ===== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            padding: 20px;
+        }
+
+        .lightbox-img {
+            max-width: 95%;
+            max-height: 90%;
+            border-radius: 12px;
+            animation: zoomIn 0.4s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .cerrar {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Animación en grid */
+        .galeria-item {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .galeria-item:active {
+            transform: scale(0.97);
+        }
     </style>
 </head>
 
@@ -777,6 +910,16 @@
                         </p>
                     </section>
 
+                   <p id="invitadoTexto" 
+                    style="text-align:center; 
+                            font-style:italic; 
+                            margin-bottom:100px; 
+                            color:#9b7739; 
+                            font-size:1.2rem; 
+                            letter-spacing:0.5px; 
+                            line-height:1.6;">
+                    </p>
+
                     <section class="seccion">
                         <h2>Itinerario</h2>
                         <div class="itinerario-grid">
@@ -810,6 +953,22 @@
                             <a href="https://maps.app.goo.gl/SM5A7u4iVHE5ZNud6" class="btn-circulo">Ver<br>Ubicación</a>
                             <a href="https://wa.me/525542588709" class="btn-circulo">Confirmar<br>Asistencia</a>
                         </div>              
+                    </section>
+
+                    <section class="seccion">
+                        <h2>Galería</h2>
+                        <div class="carrusel">
+                            <div class="carrusel-track">
+                                <img src="foto1.jpg">
+                                <img src="foto2.jpg">
+                                <img src="foto3.jpg">
+                                <img src="foto4.jpg">
+                                <img src="foto5.jpg">
+                            </div>
+
+                            <button class="carrusel-btn prev">&#10094;</button>
+                            <button class="carrusel-btn next">&#10095;</button>
+                        </div>
                     </section>
                </div>
            </div>
@@ -934,6 +1093,91 @@
         }, 1000);
      });
  </script>
+ <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const cerrar = document.querySelector(".cerrar");
 
+    document.querySelectorAll(".galeria-item img").forEach(img => {
+        img.addEventListener("click", () => {
+            lightbox.style.display = "flex";
+            lightboxImg.src = img.src;
+        });
+    });
+
+    cerrar.addEventListener("click", () => {
+        lightbox.style.display = "none";
+    });
+
+    lightbox.addEventListener("click", (e) => {
+        if (e.target !== lightboxImg) {
+            lightbox.style.display = "none";
+        }
+    });
+</script>
+<script>
+const track = document.querySelector('.carrusel-track');
+const slides = document.querySelectorAll('.carrusel-track img');
+const nextBtn = document.querySelector('.next');
+const prevBtn = document.querySelector('.prev');
+
+let index = 0;
+
+function updateCarrusel() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+}
+
+nextBtn.addEventListener('click', () => {
+    index = (index + 1) % slides.length;
+    updateCarrusel();
+});
+
+prevBtn.addEventListener('click', () => {
+    index = (index - 1 + slides.length) % slides.length;
+    updateCarrusel();
+});
+
+
+// 👉 Swipe táctil (celular)
+let startX = 0;
+
+track.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+});
+
+track.addEventListener('touchend', e => {
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+
+    if (diff > 50) {
+        index = (index + 1) % slides.length;
+    } else if (diff < -50) {
+        index = (index - 1 + slides.length) % slides.length;
+    }
+
+    updateCarrusel();
+});
+setInterval(() => {
+    index = (index + 1) % slides.length;
+    updateCarrusel();
+}, 5000); // cambia cada 4 segundos
+</script>
+
+<script>
+const nombre = "Familia Pérez"; // 👈 cambiar aquí
+const asientos = 3; // 👈 cambiar aquí
+
+document.getElementById("invitadoTexto").innerHTML = `
+    <strong>${nombre}</strong>, hemos reservado <strong>${asientos} lugar(es)</strong> especialmente para ustedes. 
+    Su presencia hará este día aún más significativo para nosotros.
+`;
+</script>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+    <span class="cerrar">&times;</span>
+    <img class="lightbox-img" id="lightbox-img">
+</div>
 </body>
 </html>
