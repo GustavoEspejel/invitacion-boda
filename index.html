@@ -593,6 +593,7 @@
     </nav>
 </header>
 
+<audio id="introAudio" src="intro.mp3" preload="auto"></audio>
 
  
 <div id="sobreContainer" class="sobre-contenedor">
@@ -766,6 +767,7 @@
         // SOBRE en el flujo: ajustar altura para quedar justo debajo del header
         const header = document.querySelector('header');
         const sobre = document.getElementById('sobreContainer');
+        const introAudio = document.getElementById('introAudio');
         const target = document.querySelector('.hero'); // al hacer click vamos a la hero (imagen principal)
         const headerHeight = header ? header.offsetHeight : 80;
 
@@ -780,14 +782,14 @@
             document.body.classList.add('locked');
  
             sobre.addEventListener('click', function () {
+                if (introAudio) {
+                    introAudio.currentTime = 0;
+                    introAudio.play().catch(() => {
+                        // reproducción bloqueada por el navegador o sin permiso
+                    });
+                }
                 sobre.classList.add('abrir');
-
-                // 🎵 Música aquí
-                const music = document.getElementById('bgMusic');
-                music.src = "https://www.youtube.com/embed/IX5bKIjuv5M?autoplay=1&loop=1&playlist=IX5bKIjuv5M";
-
                 setTimeout(() => {
-                    sobre.classList.add('fade-out');
 
     sobre.classList.add('fade-out');
 
@@ -851,14 +853,6 @@
         }, 1000);
      });
  </script>
-<iframe 
-    id="bgMusic"
-    width="0" 
-    height="0" 
-    src=""
-    frameborder="0"
-    allow="autoplay"
-    style="display:none;">
-</iframe>
+
 </body>
 </html>
