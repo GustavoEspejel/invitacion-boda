@@ -26,7 +26,7 @@
             font-family: 'Lora', serif;
             color: var(--texto-oscuro);
             background-color: var(--blanco);
-            overflow-x: hidden;
+            overflow-x: hidden; 
         }
 
         /* ===== HEADER ===== */
@@ -71,6 +71,45 @@
             width: 82px;
             height: 1px;
             margin-top: 10px;
+            background-color: rgba(186, 165, 130, 0.55);
+            border-radius: 1px;
+        }
+
+        .logo-date {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 12px;
+            margin-bottom: 10px;
+        }
+
+        .date-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .date-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.45rem;
+            color: var(--dorado-suave);
+            letter-spacing: 0.04em;
+            line-height: 1;
+        }
+
+        .date-label {
+            font-family: 'Great Vibes', cursive;
+            font-size: 0.95rem;
+            color: var(--dorado-suave);
+            opacity: 0.95;
+            line-height: 1.1;
+        }
+
+        .date-divider {
+            width: 1px;
+            height: 42px;
             background-color: rgba(186, 165, 130, 0.55);
             border-radius: 1px;
         }
@@ -122,6 +161,7 @@
         .hero h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 6rem;
+            font-weight: 500;
             color: var(--dorado-suave);
             text-shadow: 0 1px 10px rgba(255,255,255,0.9);
             margin-bottom: 20px;
@@ -177,6 +217,11 @@
             display: block;
             font-family: 'Lora', serif;
         }
+
+        .contador-imagen {
+            margin-bottom: 50px;
+        }
+
         @media (max-width:480px){
             .sobre-titulo { font-size: 2.2rem; }
             .contador .bloque { min-width:56px; padding:8px 10px; }
@@ -587,6 +632,17 @@
         <span class="logo-initials">L & G</span>
         <span class="logo-name">Lorelei & Gustavo</span>
     </div>
+    <div class="logo-date">
+        <div class="date-item">
+            <span class="date-number">16</span>
+            <span class="date-label">de mayo</span>
+        </div>
+        <div class="date-divider"></div>
+        <div class="date-item">
+            <span class="date-number">18</span>
+            <span class="date-label">horas</span>
+        </div>
+    </div>
     <nav>
         <a href="#">Nuestra Boda</a>
         <a href="#">Detalles</a>
@@ -689,6 +745,24 @@
               </svg>
                <div class="guirnalda-contenido">
                     <section class="seccion">
+                        <div class="contador contador-imagen">
+                            <div class="bloque">
+                                <div class="numero contador-dias">00</div>
+                                <div class="label">Días</div>
+                            </div>
+                            <div class="bloque">
+                                <div class="numero contador-horas">00</div>
+                                <div class="label">Horas</div>
+                            </div>
+                            <div class="bloque">
+                                <div class="numero contador-minutos">00</div>
+                                <div class="label">Minutos</div>
+                            </div>
+                            <div class="bloque">
+                                <div class="numero contador-segundos">00</div>
+                                <div class="label">Segundos</div>
+                            </div>
+                        </div>
                         <div class="imagen-invitacion">
                             <img src="anillos.png" alt="Invitación - Lorelei & Gustavo">
                         </div>
@@ -841,10 +915,18 @@
             const elHoras = document.getElementById('horas');
             const elMin  = document.getElementById('minutos');
             const elSeg  = document.getElementById('segundos');
+            const elDiasImg = document.querySelectorAll('.contador-imagen .contador-dias');
+            const elHorasImg = document.querySelectorAll('.contador-imagen .contador-horas');
+            const elMinImg  = document.querySelectorAll('.contador-imagen .contador-minutos');
+            const elSegImg  = document.querySelectorAll('.contador-imagen .contador-segundos');
             if(elDias) elDias.textContent = String(dias).padStart(2,'0');
             if(elHoras) elHoras.textContent = String(horas).padStart(2,'0');
             if(elMin) elMin.textContent = String(minutos).padStart(2,'0');
             if(elSeg) elSeg.textContent = String(segundos).padStart(2,'0');
+            elDiasImg.forEach(el => el.textContent = String(dias).padStart(2,'0'));
+            elHorasImg.forEach(el => el.textContent = String(horas).padStart(2,'0'));
+            elMinImg.forEach(el => el.textContent = String(minutos).padStart(2,'0'));
+            elSegImg.forEach(el => el.textContent = String(segundos).padStart(2,'0'));
         }
         actualizarContador();
         const contadorInterval = setInterval(() => {
