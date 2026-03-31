@@ -148,7 +148,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: transparent;
             z-index: 1;
         }
 
@@ -163,7 +163,7 @@
             font-size: 6rem;
             font-weight: 500;
             color: var(--dorado-suave);
-            text-shadow: 0 1px 10px rgba(255,255,255,0.9);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
             margin-bottom: 20px;
         }
 
@@ -406,11 +406,10 @@
                 min-height: 75vh;
                 justify-content: flex-end;
                 padding-bottom: 7vh;
-                filter: brightness(0.95);
             }
             /* overlay opaco en móvil para suavizar la imagen sin afectar el contenido */
             .hero::before {
-                background-color: rgba(255,255,255,0.48);
+                background-color: transparent;
             }
 
             /* Sobre y título: un poco más grandes en móvil */
