@@ -201,6 +201,41 @@
     border-radius: 12px;
     max-width: 100%;
 }
+.invitado-box {
+    max-width: 650px;
+    margin: 0 auto 100px auto;
+    padding: 20px 30px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(186,165,130,0.3);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
+    backdrop-filter: blur(6px);
+    position: relative;
+}
+.sobre-contenedor {
+    transform: translateY(-40px);
+}
+/* pequeño detalle decorativo dorado */
+.invitado-box::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--dorado-suave);
+    border-radius: 2px;
+}
+
+#invitadoTexto {
+    font-style: italic;
+    color: #9b7739;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+}
 
 .carrusel-track {
     display: flex;
@@ -250,6 +285,9 @@
             align-items:center;
             gap:14px;
             flex-wrap:wrap;
+        }
+        #contadorBoda {
+            margin-top: 0px;
         }
         .contador .bloque {
             background: rgba(255,255,255,0.95);
@@ -640,13 +678,12 @@
             flex-direction:column;
             align-items:center;
             justify-content:center;
-            gap:25px;
+            gap:20px; /* controla separación general */
             text-align:center;
             padding:120px 20px 60px;
 
-            transition: opacity 0.8s ease, transform 0.8s ease; /* AGREGAR */
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-
         .sobre-contenedor.fade-out{
             opacity:0;
             transform: translateY(-30px);
@@ -691,16 +728,15 @@
             line-height: 1;
         }
         .sobre-click {
-            position: absolute;
-            bottom: -40px;
-            width: 100%;
-            text-align: center;
-            color: var(--texto-claro);
-            font-size: 14px;
-            z-index: 2;
+            margin-top: -10px; /* lo acerca al sobre */
+            color: #BAA582;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
             pointer-events: none;
+            animation: parpadeo 2s infinite;
         }
-        /* estado abierto */
+                        /* estado abierto */
         .sobre-contenedor.abrir .sobre-tapa { transform: rotateX(180deg); }
         .sobre-contenedor.abrir .sobre-box  { transform: translateY(-22px); }
  
@@ -910,15 +946,9 @@
                         </p>
                     </section>
 
-                   <p id="invitadoTexto" 
-                    style="text-align:center; 
-                            font-style:italic; 
-                            margin-bottom:100px; 
-                            color:#9b7739; 
-                            font-size:1.2rem; 
-                            letter-spacing:0.5px; 
-                            line-height:1.6;">
-                    </p>
+                    <div class="invitado-box">
+                        <p id="invitadoTexto"></p>
+                    </div>
 
                     <section class="seccion">
                         <h2>Itinerario</h2>
@@ -959,11 +989,11 @@
                         <h2>Galería</h2>
                         <div class="carrusel">
                             <div class="carrusel-track">
-                                <img src="foto1.jpeg">
-                                <img src="foto2.jpeg">
-                                <img src="foto3.jpeg">
-                                <img src="foto4.jpeg">
-                                <img src="foto5.jpeg">
+                                <img src="foto1.jpg">
+                                <img src="foto2.jpg">
+                                <img src="foto3.jpg">
+                                <img src="foto4.jpg">
+                                <img src="foto5.jpg">
                             </div>
 
                             <button class="carrusel-btn prev">&#10094;</button>
